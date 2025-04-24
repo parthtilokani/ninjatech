@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+property_management_project_task.access_purchase_order_wizard,access_purchase_order_wizard,property_management_project_task.model_purchase_order_wizard,base.group_user,1,1,1,1
+

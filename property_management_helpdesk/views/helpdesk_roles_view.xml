@@ -1,0 +1,46 @@
+<odoo>
+
+    <record id="view_helpdesk_roles_tree" model="ir.ui.view">
+        <field name="name">helpdesk.roles.list</field>
+        <field name="model">helpdesk.roles</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+    <!-- Form View -->
+    <record id="view_helpdesk_roles_form" model="ir.ui.view">
+        <field name="name">helpdesk.roles.form</field>
+        <field name="model">helpdesk.roles</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <record id="action_helpdesk_roles" model="ir.actions.act_window">
+        <field name="name">Helpdesk Roles</field>
+        <field name="res_model">helpdesk.roles</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+     <menuitem id="menu_helpdesk_staff_roles"
+              name="Roles"
+              sequence="2"
+              action="action_helpdesk_roles"
+              parent="helpdesk.helpdesk_menu_config"/>
+
+
+
+</odoo>

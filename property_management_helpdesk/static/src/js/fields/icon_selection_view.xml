@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="web.SelectionField" t-inherit-mode="extension">
+        <xpath expr="//span[1]" position="attributes">
+            <attribute name="t-ref">readonlyRef</attribute>
+        </xpath>
+        <xpath expr="//select[1]" position="attributes">
+            <attribute name="t-ref">selectRef</attribute>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,17 @@
+<odoo>
+
+  <record id="product_product_view_kanban_view" model="ir.ui.view">
+    <field name="name">Product Variant Kanban view</field>
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="industry_fsm_sale.industry_fsm_sale_product_catalog_kanban_view" />
+    <field name="arch" type="xml">
+      <a role="menuitem" type="open" position="after">
+        <a role="menuitem" type="object" name="action_purchase_order_wizard" class="dropdown-item border-top-0">Purchase Order</a>
+      </a>
+    </field>
+  </record>
+
+
+
+
+</odoo>

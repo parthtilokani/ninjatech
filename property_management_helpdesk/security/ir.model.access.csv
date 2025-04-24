@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_apartment_config,property_management_helpdesk.apartment_config,model_apartment_config,base.group_user,1,1,1,1
+access_apartment_unit,property_management_helpdesk.apartment_unit,model_apartment_unit,base.group_user,1,1,1,1
+property_management_helpdesk.access_time_slots,access_time_slots,property_management_helpdesk.model_time_slots,base.group_user,1,1,1,1
+property_management_helpdesk.access_helpdesk_category,access_helpdesk_category,property_management_helpdesk.model_helpdesk_category,base.group_user,1,1,1,1
+access_helpdesk_roles,property_management_maintenance.helpdesk_roles,model_helpdesk_roles,base.group_user,1,1,1,1

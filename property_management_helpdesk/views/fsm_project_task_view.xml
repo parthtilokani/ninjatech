@@ -1,0 +1,29 @@
+<odoo>
+
+    <record id="fsm_task_form_view" model="ir.ui.view">
+        <field name="name">fsm.task.form.view</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2" />
+        <field name="arch" type="xml">
+            <xpath expr="//group/group/div/field[@name='project_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <field name="partner_id" position="after">
+                <field name="building_id" />
+                <field name="unit_id" />
+            </field>
+            <field name="tag_ids" position="before">
+                <field name="category_id" />
+            </field>
+            <xpath expr="//group/group/div/field[@name='project_id']" position="before">
+                <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}"/>
+            </xpath>
+            <xpath expr="//field[@name='project_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>

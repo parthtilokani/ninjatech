@@ -1,0 +1,18 @@
+<odoo>
+    <function model="ir.model.fields" name="formbuilder_whitelist">
+        <value>helpdesk.ticket</value>
+        <value eval="[
+            'partner_name',
+            'partner_phone',
+            'partner_email',
+            'partner_company_name',
+            'name',
+            'description',
+            'team_id',
+            'category_id',
+            'customer_is_pte',
+            'partner_id',
+            'properties',
+        ]"/>
+    </function>
+</odoo>

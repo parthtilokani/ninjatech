@@ -1,0 +1,126 @@
+<odoo>
+
+    <record id="helpdesk_fsm_form_view_inherot" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.fsm.form.view</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_fsm.helpdesk_ticket_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_generate_fsm_task']" position="attributes">
+                <attribute name="string">Work Order</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="helpdesk_fsm_task_form_view_inherit" model="ir.ui.view">
+        <field name="name">helpdesk.fsm.task.form.view</field>
+        <field name="model">helpdesk.create.fsm.task</field>
+        <field name="inherit_id" ref="helpdesk_fsm.create_fsm_task_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='project_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_generate_task']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_generate_and_view_task']" position="attributes">
+                <attribute name="string">Create &amp; View Work Order</attribute>
+            </xpath>
+            <xpath expr="//field[@name='worksheet_template_id']" position="after">
+                <field name="category_id"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="helpdesk_ticket_form_view" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.view</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form" />
+        <field name="arch" type="xml">
+
+            <field name="partner_id" position="after">
+                <field name="building_id" />
+                <field name="unit_id" />
+                <field name="category_id" />
+                <field name="customer_is_pte" />
+                <field name="helpdesk_role_id"/>
+            </field>
+            <field name="priority" position="replace">
+                <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}" />
+            </field>
+            <xpath expr="//page[@name='description']" position="after">
+                <page name="time_slots" string="Time Slots" invisible="customer_is_pte">
+                    <field name="scheduled_slot_ids" >
+                        <list editable="bottom">
+                            <field name="date"  string="Date" />
+                            <field name="from_time" widget="float_time" string="From" />
+                            <field name="from_formatted_time" string="FROM Formatted" />
+                            <field name="to_time" widget="float_time" string="To" />
+                            <field name="to_formatted_time" string="To Formatted" />
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="helpdesk_ticket_list_view" model="ir.ui.view">
+        <field name="name">Helpdesk Ticket List View</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sla_deadline']" position="before">
+                <field name="building_id" />
+                <field name="unit_id" />
+                <field name="category_id" />
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="replace">
+                <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}" />
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="helpdesk_tickets_view_search_base" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.search.base</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_search_base" />
+        <field name="arch" type="xml">
+
+                <xpath expr="//filter[@name='urgent_priority']" position="attributes">
+                    <attribute name="domain">[('custom_priority', '=', 'urgent')]</attribute>
+                </xpath>
+                <xpath expr="//filter[@name='high_priority']" position="attributes">
+                    <attribute name="domain">[('custom_priority', '=', 'high')]</attribute>
+                </xpath>
+                <xpath expr="//filter[@name='medium_priority']" position="attributes">
+                    <attribute name="domain">[('custom_priority', '=', 'normal')]</attribute>
+                    <attribute name="string">Normal Priority</attribute>
+                </xpath>
+                <xpath expr="//filter[@name='low_priority']" position="attributes">
+                    <attribute name="domain">[('custom_priority', '=', 'low')]</attribute>
+                </xpath>
+
+
+        </field>
+    </record>
+
+    <record id="helpdesk_stage_form_view" model="ir.ui.view">
+        <field name="name">helpdesk.stage.form.view</field>
+        <field name="model">helpdesk.stage</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_stage_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='fold']" position="after">
+                <field name="is_pte" />
+                <field name="transfer_to_supervisor" />
+                <field name="is_missing_info" />
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>

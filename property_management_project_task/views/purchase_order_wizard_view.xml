@@ -1,0 +1,30 @@
+<odoo>
+    <record id="purchase_order_wizard_view" model="ir.ui.view">
+        <field name="name">Purchase Order Wizard View</field>
+        <field name="model">purchase.order.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="purchase_field_visible" invisible="1"/>
+                        <field name="purchase_order_ids" invisible="1"/>
+                        <field name="purchase_order_id" invisible="not purchase_field_visible" domain="[('id', '=', purchase_order_ids)]"
+                        options="{'no_create': True, 'no_open': True}"/>
+                        <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'supplier', 'show_vat': True}"/>
+                        <field name="product_qty" />
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="create_view_po" type="object" string="Create or Edit PO" />
+                    <button string="Cancel"
+                                class="btn-secondary"
+                                special="cancel"
+                                data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+
+    </record>
+
+
+</odoo>

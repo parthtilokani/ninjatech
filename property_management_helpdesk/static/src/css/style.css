@@ -1,0 +1,64 @@
+.o_datetime_tabs {
+    display: flex;
+    justify-content: space-between;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 8px;
+    width: 250px;
+}
+.o_datetime_tab {
+    flex: 1;
+    text-align: center;
+    padding: 6px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.o_datetime_tab.active {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.o_time_picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.o_time_picker select {
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+.o_time_picker select:focus {
+    outline: none;
+}
+.scrollable-picker {
+    width: 80px;  /* Adjust width as needed */
+    height: 120px; /* Adjust height for visibility */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #aaa #f0f0f0;
+}
+
+.scroll-item {
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.scroll-item:hover, .scroll-item.selected {
+    background-color: #007bff;
+    color: #fff;
+}

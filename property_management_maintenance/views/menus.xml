@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <menuitem id="menu_maintenance_staff"
+                  name="Staffs"
+                  sequence="1"
+                  action="action_maintenance_staff"
+                  parent="maintenance.menu_maintenance_configuration"/>
+    </data>
+</odoo>

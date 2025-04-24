@@ -1,0 +1,30 @@
+<odoo>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="maintenance_equipment_form_view">
+      <field name="name">maintenance equipment form view</field>
+      <field name="model">maintenance.equipment</field>
+      <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
+      <field name="arch" type="xml">
+        <field name="location" position='replace'>
+          <field name="building_id" required="1"/>
+          <field name="unit_id" required="1" domain="[('apartment_config_id', '=', building_id)]"/>
+        </field>
+        <field name="equipment_assign_to" position="replace">
+        </field>
+        <field name="employee_id" position="replace">
+        </field>
+        <field name="scrap_date" position="attributes">
+          <attribute name="string">Expire / Use By Date</attribute>
+        </field>
+        <xpath expr="//page[@name='maintenance']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+      </field>
+    </record>
+
+
+
+</odoo>
