@@ -7,6 +7,9 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='email_cc']" position="replace">
             </xpath>
+            <xpath expr="//field[@name='priority']" position="replace">
+                <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}"/>
+            </xpath>
             <xpath expr="//field[@name='equipment_id']" position="replace">
                 <field name="building_id" required="1" />
                 <field name="unit_id" required="1" domain="[('apartment_config_id', '=', building_id)]"/>

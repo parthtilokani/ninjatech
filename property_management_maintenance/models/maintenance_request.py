@@ -27,3 +27,13 @@ class MaintenanceRequest(models.Model):
     user_id = fields.Many2one(
         'res.users',
         domain="[('is_maintenance_staff', '=', True)]")
+
+    custom_priority = fields.Selection(
+        selection=[
+            ('low', 'Low'),
+            ('medium', 'Medium'),
+            ('high', 'High'),
+            ('urgent', 'Urgent'),
+        ],
+        string="Custom Priority",
+    )

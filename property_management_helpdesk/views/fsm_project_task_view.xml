@@ -12,8 +12,18 @@
                 <field name="building_id" />
                 <field name="unit_id" />
             </field>
+             <field name="user_ids" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
             <field name="tag_ids" position="before">
+                <field name="sequence_number" readonly="1"/>
+            </field>
+            <field name="tag_ids" position="after">
                 <field name="category_id" />
+                <field name="allowed_role_ids" widget="many2many_tags" invisible="1"/>
+                <field name="helpdesk_role_id"/>
+                <field name="allowed_user_ids" widget="many2many_tags" invisible="1"/>
+                <field name="user_ids" widget="many2many_tags" domain="[('id', 'in', allowed_user_ids)]"/>
             </field>
             <xpath expr="//group/group/div/field[@name='project_id']" position="before">
                 <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}"/>

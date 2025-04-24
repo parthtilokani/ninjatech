@@ -57,7 +57,7 @@ class HelpdeskTicket(models.Model):
 
         return rdata
 
-    helpdesk_role_id = fields.Many2one(related="category_id.role_id")
+    helpdesk_role_id = fields.Many2one('helpdesk.category')
 
     # @api.depends('category_id')
     # def _compute_helpdesk_role_id(self):
@@ -94,3 +94,16 @@ class TimeSlots(models.Model):
                 record.to_formatted_time = f"{hours}:{minutes:02d} {suffix}"
             else:
                 record.to_formatted_time = ""
+
+    class HelpdeskSLA(models.Model):
+        _inherit = 'helpdesk.sla'
+
+        custom_priority = fields.Selection(
+            selection=[
+                ('low', 'Low'),
+                ('medium', 'Medium'),
+                ('high', 'High'),
+                ('urgent', 'Urgent'),
+            ],
+            string="Custom Priority",
+        )

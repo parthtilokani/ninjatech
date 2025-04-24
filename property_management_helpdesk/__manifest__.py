@@ -40,9 +40,11 @@ Long description of module's purpose
     # always loaded
     'data': [
         'data/data.xml',
+        'data/ir_sequence_data.xml',
         'security/ir.model.access.csv',
         'views/apartment_config_view.xml',
         'views/helpdesk_ticket_view.xml',
+        'views/helpdesk_sla_policies_view.xml',
         'views/helpdesk_roles_view.xml',
         'views/helpdesk_template.xml',
         'views/helpdesk_category.xml',

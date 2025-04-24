@@ -1,0 +1,29 @@
+<odoo>
+
+    <record id="custom_helpdesk_sla_view_form" model="ir.ui.view">
+        <field name="name">custom.helpdesk.sla.view.form</field>
+        <field name="model">helpdesk.sla</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_sla_view_form"/>
+        <field name="arch" type="xml">
+            <field name="priority" position="replace">
+                <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="custom_helpdesk_sla_view_tree" model="ir.ui.view">
+        <field name="name">custom.helpdesk.sla.view.tree</field>
+        <field name="model">helpdesk.sla</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_sla_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="priority" position="replace">
+                <field name="custom_priority" string="Custom Priority"/>
+            </field>
+        </field>
+    </record>
+
+
+
+
+
+</odoo>
