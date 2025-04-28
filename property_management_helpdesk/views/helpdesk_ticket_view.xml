@@ -105,6 +105,10 @@
             <xpath expr="//field[@name='team_id'][1]" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <field name="stage_id" position="after">
+                <field name="state" optional="show"/>
+                <field name="fsm_task_ids" widget="many2many_tags" optional="hide" />
+            </field>
         </field>
     </record>
 

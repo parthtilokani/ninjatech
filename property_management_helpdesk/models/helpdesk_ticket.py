@@ -83,6 +83,18 @@ class HelpdeskTicket(models.Model):
                 else:
                     ticket.state = 'no_task_done'
 
+    @api.model
+    def name_get(self):
+        result = []
+        for ticket in self:
+            task_details = [
+                f"{task.name} - {task.stage_id.name}"
+                for task in ticket.fsm_task_ids
+            ]
+            display_name = f"({'- '.join(task_details)})" if task_details else ticket.name
+            result.append((ticket.id, display_name))
+        return result
+
 
 class TimeSlots(models.Model):
     _name = 'time.slots'
