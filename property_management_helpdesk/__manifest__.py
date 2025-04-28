@@ -17,7 +17,7 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'helpdesk', 'website_helpdesk', 'web', 'bus', 'mail', 'helpdesk_fsm'],
+    'depends': ['base', 'helpdesk', 'website_helpdesk', 'web', 'bus', 'mail', 'helpdesk_fsm','industry_fsm_sale','project_enterprise'],
 
     'assets': {
         'web.assets_frontend': [
@@ -42,6 +42,7 @@ Long description of module's purpose
         'data/data.xml',
         'data/ir_sequence_data.xml',
         'security/ir.model.access.csv',
+        'security/helpdesk_user_group.xml',
         'views/apartment_config_view.xml',
         'views/helpdesk_ticket_view.xml',
         'views/helpdesk_sla_policies_view.xml',

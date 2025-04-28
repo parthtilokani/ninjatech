@@ -59,10 +59,29 @@ class HelpdeskTicket(models.Model):
 
     helpdesk_role_id = fields.Many2one('helpdesk.category')
 
-    # @api.depends('category_id')
-    # def _compute_helpdesk_role_id(self):
-    #     for ticket in self:
-    #         ticket.helpdesk_role_id = ticket.category_id.role_id if ticket.category_id else False
+    state = fields.Selection(
+        [('no_task_done', 'No Task Done'),
+         ('partially_done', 'Partially Done'),
+         ('done', 'Done')],
+        string="State",
+        compute="_compute_state",
+        store=True
+    )
+
+    @api.depends('fsm_task_ids.stage_id')
+    def _compute_state(self):
+        for ticket in self:
+            tasks = ticket.fsm_task_ids
+            if not tasks:
+                ticket.state = 'no_task_done'
+            else:
+                done_tasks = tasks.filtered(lambda t: t.stage_id.name == 'Done')
+                if len(done_tasks) == len(tasks):
+                    ticket.state = 'done'
+                elif done_tasks:
+                    ticket.state = 'partially_done'
+                else:
+                    ticket.state = 'no_task_done'
 
 
 class TimeSlots(models.Model):

@@ -8,6 +8,9 @@
             <xpath expr="//button[@name='action_generate_fsm_task']" position="attributes">
                 <attribute name="string">Work Order</attribute>
             </xpath>
+            <field name="team_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
         </field>
     </record>
 
@@ -48,6 +51,13 @@
                 <field name="customer_is_pte" />
                 <field name="helpdesk_role_id"/>
             </field>
+            <field name="priority" position="after">
+                 <field name="state" />
+            </field>
+            <field name="partner_id" position="replace">
+                <field name="partner_id" readonly="1" groups="helpdesk.group_helpdesk_user"/>
+                <field name="partner_id" groups="helpdesk.group_helpdesk_manager"/>
+            </field>
             <field name="priority" position="replace">
                 <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}" />
             </field>
@@ -63,6 +73,15 @@
                         </list>
                     </field>
                 </page>
+                <page name="project_tasks" string="Project Tasks">
+                <field name="fsm_task_ids">
+                    <list>
+                        <field name="name"/>
+                        <field name="stage_id"/>
+                        <field name="date_deadline"/>
+                    </list>
+                </field>
+            </page>
             </xpath>
         </field>
     </record>
@@ -79,6 +98,12 @@
             </xpath>
             <xpath expr="//field[@name='priority']" position="replace">
                 <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}" />
+            </xpath>
+            <field name="user_id" position="attributes">
+                <attribute name="groups">helpdesk.group_helpdesk_manager</attribute>
+            </field>
+            <xpath expr="//field[@name='team_id'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
         </field>
     </record>
@@ -121,6 +146,33 @@
         </field>
     </record>
 
+
+    <record id="view_helpdesk_ticket_kanban_inherit" model="ir.ui.view">
+        <field name="name">Helpdesk Ticket Kanban Inherit</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_kanban" />
+        <field name="arch" type="xml">
+            <field t-if="record.user_id.raw_value" name="user_id" position="attributes">
+                <attribute name="groups">helpdesk.group_helpdesk_manager</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="helpdesk.helpdesk_ticket_action_main_my" model="ir.actions.act_window">
+        <field name="view_mode">list,kanban,form,activity</field>
+    </record>
+
+    <menuitem
+            id="helpdesk.helpdesk_ticket_report_menu_main"
+            groups="helpdesk.group_helpdesk_manager"/>
+
+     <menuitem
+            id="helpdesk.helpdesk_menu_team_dashboard"
+            groups="helpdesk.group_helpdesk_manager"/>
+
+    <menuitem
+            id="helpdesk.helpdesk_ticket_menu_all"
+            groups="helpdesk.group_helpdesk_manager"/>
 
 
 </odoo>
