@@ -110,7 +110,7 @@
             </xpath>
             <field name="stage_id" position="after">
                 <field name="state" optional="show"/>
-                <button name="action_view_tasks" type="object" string="View WO" ="state == 'no_task'"/>
+                <button name="action_view_tasks" type="object" string="View WO" invisible="state == 'no_task'"/>
                 <field name="fsm_task_ids" widget="many2many_tags" optional="hide" context="{'is_view': True}" />
             </field>
         </field>
