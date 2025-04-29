@@ -91,6 +91,9 @@
         <field name="model">helpdesk.ticket</field>
         <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree" />
         <field name="arch" type="xml">
+            <field name="team_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
             <xpath expr="//field[@name='sla_deadline']" position="before">
                 <field name="building_id" />
                 <field name="unit_id" />
@@ -107,6 +110,7 @@
             </xpath>
             <field name="stage_id" position="after">
                 <field name="state" optional="show"/>
+                <button name="action_view_tasks" type="object" string="View WO" ="state == 'no_task'"/>
                 <field name="fsm_task_ids" widget="many2many_tags" optional="hide" context="{'is_view': True}" />
             </field>
         </field>

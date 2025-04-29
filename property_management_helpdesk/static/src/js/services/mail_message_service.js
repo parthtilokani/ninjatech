@@ -14,7 +14,7 @@ export class HelpdeskCoreCommon {
         this.notificationService = services.notification;
         this.orm = services.orm;
         this.presence = services.presence;
-//        this.store = services["mail.store"];
+        this.store = services["mail.store"];
     }
 
     setup() {

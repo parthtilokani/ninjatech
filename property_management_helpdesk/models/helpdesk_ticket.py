@@ -1,6 +1,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 from odoo.addons.mail.tools.discuss import Store
+from ast import literal_eval
 
 
 class HelpdeskTicket(models.Model):
@@ -60,10 +61,11 @@ class HelpdeskTicket(models.Model):
     helpdesk_role_id = fields.Many2one('helpdesk.category')
 
     state = fields.Selection(
-        [('no_task_done', 'No Task Done'),
+        [('no_task_done', 'No WO Done'),
+         ('no_task', 'No WO'),
          ('partially_done', 'Partially Done'),
-         ('done', 'Done')],
-        string="State",
+         ('done', 'All WO Done')],
+        string="WO State",
         compute="_compute_state",
         store=True
     )
@@ -73,9 +75,9 @@ class HelpdeskTicket(models.Model):
         for ticket in self:
             tasks = ticket.fsm_task_ids
             if not tasks:
-                ticket.state = 'no_task_done'
+                ticket.state = 'no_task'
             else:
-                done_tasks = tasks.filtered(lambda t: t.stage_id.name == 'Done')
+                done_tasks = tasks.filtered(lambda t: t.stage_id == self.env.ref('project.project_stage_2'))
                 if len(done_tasks) == len(tasks):
                     ticket.state = 'done'
                 elif done_tasks:
@@ -94,6 +96,19 @@ class HelpdeskTicket(models.Model):
             record.is_helpdesk_manager = user.has_group('helpdesk.group_helpdesk_manager')
             record.is_helpdesk_user = user.has_group('helpdesk.group_helpdesk_user')
             record.is_admin_user = user.has_group('base.group_system')  # Admin group
+
+    def action_view_tasks(self):
+        action = self.env['ir.actions.act_window']._for_xml_id('industry_fsm.project_task_action_all_fsm')
+        action['context'] = dict(literal_eval(action.get('context', '{}')), create=False)
+        action['target'] = 'new'
+
+        if len(self.fsm_task_ids) == 1:
+            fsm_form_view = self.env.ref('project.view_task_form2')
+            action.update(res_id=self.fsm_task_ids[0].id, views=[(fsm_form_view.id, 'form')])
+        else:
+            action.update(domain=[('id', 'in', self.fsm_task_ids.ids)], name=_('Tasks'))
+        return action
+
 
 class TimeSlots(models.Model):
     _name = 'time.slots'

@@ -7,3 +7,5 @@ class HelpdeskStage(models.Model):
     is_pte = fields.Boolean('Permission to Enter?')
     transfer_to_supervisor = fields.Boolean("Transfer to Supervisor?")
     is_missing_info = fields.Boolean("Missing Record?")
+
+
