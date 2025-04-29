@@ -26,7 +26,7 @@ Long description of module's purpose
             'property_management_helpdesk/static/src/js/public/*',
             'property_management_helpdesk/static/src/css/style.css',
             'property_management_helpdesk/static/src/js/services/mail_message_service.js',
-            'property_management_helpdesk/static/src/js/notification/*',
+            # 'property_management_helpdesk/static/src/js/notification/*',
         ],
         'web.assets_backend': [
             'property_management_helpdesk/static/src/css/tom_select.css',
