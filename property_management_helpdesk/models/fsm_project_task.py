@@ -71,18 +71,10 @@ class ProjectTask(models.Model):
                 vals['sequence_number'] = f"{role.code}{sequence}"
         return super(ProjectTask, self).create(vals)
 
-    # @api.onchange('helpdesk_role_id')
-    # def _onchange_helpdesk_role_id(self):
-    #     print('_onchange_helpdesk_role_id')
-    #     if self.helpdesk_role_id:
-    #         return {
-    #             'domain': {
-    #                 'user_ids': [('helpdesk_role_id', '=', self.helpdesk_role_id.id)]
-    #             }
-    #         }
-    #     else:
-    #         return {
-    #             'domain': {
-    #                 'user_ids': []
-    #             }
-    #         }
+    def _compute_display_name(self):
+        res = super()._compute_display_name()
+        if self._context.get('is_view'):
+            for rec in self:
+                stage_name = rec.stage_id.name if rec.stage_id else ''
+                rec.display_name = f"{rec.display_name}-{stage_name}"
+        return res

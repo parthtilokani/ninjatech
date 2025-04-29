@@ -55,8 +55,8 @@
                  <field name="state" />
             </field>
             <field name="partner_id" position="replace">
-                <field name="partner_id" readonly="1" groups="helpdesk.group_helpdesk_user"/>
-                <field name="partner_id" groups="helpdesk.group_helpdesk_manager"/>
+                <field name="partner_id" invisible="not is_admin_user and not is_helpdesk_manager" readonly="0"/>
+                <field name="partner_id" invisible="not is_helpdesk_user or is_admin_user or is_helpdesk_manager" readonly="1"/>
             </field>
             <field name="priority" position="replace">
                 <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}" />
@@ -107,7 +107,7 @@
             </xpath>
             <field name="stage_id" position="after">
                 <field name="state" optional="show"/>
-                <field name="fsm_task_ids" widget="many2many_tags" optional="hide" />
+                <field name="fsm_task_ids" widget="many2many_tags" optional="hide" context="{'is_view': True}" />
             </field>
         </field>
     </record>
@@ -166,6 +166,14 @@
         <field name="view_mode">list,kanban,form,activity</field>
     </record>
 
+    <record id="helpdesk.helpdesk_ticket_action_main_my_pivot" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref=""/>
+    </record>
+
+     <record id="helpdesk.helpdesk_ticket_action_main_my_graph" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref=""/>
+    </record>
+
     <menuitem
             id="helpdesk.helpdesk_ticket_report_menu_main"
             groups="helpdesk.group_helpdesk_manager"/>
@@ -177,6 +185,5 @@
     <menuitem
             id="helpdesk.helpdesk_ticket_menu_all"
             groups="helpdesk.group_helpdesk_manager"/>
-
 
 </odoo>

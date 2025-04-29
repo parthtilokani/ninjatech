@@ -83,18 +83,17 @@ class HelpdeskTicket(models.Model):
                 else:
                     ticket.state = 'no_task_done'
 
-    @api.model
-    def name_get(self):
-        result = []
-        for ticket in self:
-            task_details = [
-                f"{task.name} - {task.stage_id.name}"
-                for task in ticket.fsm_task_ids
-            ]
-            display_name = f"({'- '.join(task_details)})" if task_details else ticket.name
-            result.append((ticket.id, display_name))
-        return result
+    is_helpdesk_manager = fields.Boolean(compute="_compute_user_groups", store=False)
+    is_helpdesk_user = fields.Boolean(compute="_compute_user_groups", store=False)
+    is_admin_user = fields.Boolean(compute="_compute_user_groups", store=False)
 
+    @api.depends('user_id')
+    def _compute_user_groups(self):
+        for record in self:
+            user = self.env.user
+            record.is_helpdesk_manager = user.has_group('helpdesk.group_helpdesk_manager')
+            record.is_helpdesk_user = user.has_group('helpdesk.group_helpdesk_user')
+            record.is_admin_user = user.has_group('base.group_system')  # Admin group
 
 class TimeSlots(models.Model):
     _name = 'time.slots'
