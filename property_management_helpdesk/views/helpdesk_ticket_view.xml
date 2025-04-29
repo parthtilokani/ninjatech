@@ -175,15 +175,33 @@
     </record>
 
     <menuitem
-            id="helpdesk.helpdesk_ticket_report_menu_main"
-            groups="helpdesk.group_helpdesk_manager"/>
+        id="helpdesk.helpdesk_ticket_report_menu_main"
+        name="Reporting"
+        parent="helpdesk.menu_helpdesk_root"
+        sequence="20" />
 
-     <menuitem
-            id="helpdesk.helpdesk_menu_team_dashboard"
-            groups="helpdesk.group_helpdesk_manager"/>
+
+<!--    <menuitem-->
+<!--            id="helpdesk.helpdesk_ticket_report_menu_main"-->
+<!--            groups="helpdesk.group_helpdesk_manager"/>-->
 
     <menuitem
-            id="helpdesk.helpdesk_ticket_menu_all"
-            groups="helpdesk.group_helpdesk_manager"/>
+            id="helpdesk.helpdesk_menu_team_dashboard"
+            name="Overview"
+            action="helpdesk.helpdesk_team_dashboard_action_main"
+            sequence="5"
+            groups="helpdesk.group_helpdesk_manager"
+            parent="helpdesk.menu_helpdesk_root"
+    />
+
+    <menuitem
+                id="helpdesk.helpdesk_ticket_menu_all"
+                name="All Tickets"
+                action="helpdesk.helpdesk_ticket_action_main_tree"
+                parent="helpdesk.helpdesk_ticket_menu_main"
+                groups="helpdesk.group_helpdesk_manager"
+                sequence="20" />
+
+
 
 </odoo>
