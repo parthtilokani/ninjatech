@@ -31,9 +31,9 @@
             <xpath expr="//button[@name='action_generate_and_view_task']" position="attributes">
                 <attribute name="string">Create &amp; View Work Order</attribute>
             </xpath>
-            <xpath expr="//field[@name='worksheet_template_id']" position="after">
-                <field name="category_id"/>
-            </xpath>
+<!--            <xpath expr="//field[@name='worksheet_template_id']" position="after">-->
+<!--                <field name="category_id"/>-->
+<!--            </xpath>-->
         </field>
     </record>
 
