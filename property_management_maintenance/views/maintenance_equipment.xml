@@ -25,6 +25,10 @@
       </field>
     </record>
 
+   <record id="maintenance.maintenance_dashboard_action" model="ir.actions.act_window">
+      <field name="domain">[('name', '=', 'Internal Maintenance')]</field>
+  </record>
+
 
 
 </odoo>

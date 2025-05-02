@@ -19,7 +19,7 @@
                 <field name="sequence_number" readonly="1"/>
             </field>
             <field name="tag_ids" position="after">
-                <field name="category_id" />
+                <field name="category_id"/>
                 <field name="allowed_role_ids" widget="many2many_tags" invisible="1"/>
                 <field name="helpdesk_role_id"/>
                 <field name="allowed_user_ids" widget="many2many_tags" invisible="1"/>
@@ -62,15 +62,31 @@
     </record>
 
     <record id="project_view_task_gantt_inherit" model="ir.ui.view">
-    <field name="name">Task Gantt View Inherit</field>
-    <field name="model">project.task</field>
-    <field name="inherit_id" ref="project_enterprise.project_task_view_gantt" />
-    <field name="arch" type="xml">
-        <div name="project_id" position="attributes">
-            <attribute name="t-if">0</attribute>
-        </div>
-    </field>
-</record>
+        <field name="name">Task Gantt View Inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project_enterprise.project_task_view_gantt" />
+        <field name="arch" type="xml">
+            <div name="project_id" position="attributes">
+                <attribute name="t-if">0</attribute>
+            </div>
+        </field>
+    </record>
+
+<!--     <record id="view_task_form_inherit_timesheet" model="ir.ui.view">-->
+<!--         <field name="name">project.task.form.inherit.timesheet</field>-->
+<!--         <field name="model">project.task</field>-->
+<!--         <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>-->
+<!--         <field name="arch" type="xml">-->
+<!--             <xpath expr="//page[@name='page_timesheets']//field[@name='timesheet_ids']/list/field[@name='employee_id']" position="replace">-->
+<!--                 <field name="employee_id" invisible="not is_admin_user and not is_project_manager" readonly="0"/>-->
+<!--                 <field name="employee_id" invisible="not is_project_user or is_admin_user or is_project_manager" readonly="1"/>-->
+<!--&lt;!&ndash;            <xpath expr="//page[@name='page_timesheets']//field[@name='employee_id']" position="attributes">&ndash;&gt;-->
+<!--&lt;!&ndash;                <attribute name="readonly">1</attribute>&ndash;&gt;-->
+<!--            </xpath>-->
+<!--         </field>-->
+<!--    </record>-->
+
+
 
 
 </odoo>

@@ -19,6 +19,9 @@ class HelpdeskTicket(models.Model):
     is_reviewed = fields.Boolean('Reviewed?')
     custom_priority = fields.Selection([('urgent', 'Urgent'), ('high', 'High'),
                                         ('normal', 'Normal'), ('low', 'Low')], "Priority", default='low', required=True)
+    is_helpdesk_manager = fields.Boolean(compute="_compute_user_groups", store=False)
+    is_helpdesk_user = fields.Boolean(compute="_compute_user_groups", store=False)
+    is_admin_user = fields.Boolean(compute="_compute_user_groups", store=False)
 
     @api.onchange('stage_id')
     def assign_supervisor(self):
@@ -85,10 +88,6 @@ class HelpdeskTicket(models.Model):
                 else:
                     ticket.state = 'no_task_done'
 
-    is_helpdesk_manager = fields.Boolean(compute="_compute_user_groups", store=False)
-    is_helpdesk_user = fields.Boolean(compute="_compute_user_groups", store=False)
-    is_admin_user = fields.Boolean(compute="_compute_user_groups", store=False)
-
     @api.depends('user_id')
     def _compute_user_groups(self):
         for record in self:
@@ -108,6 +107,14 @@ class HelpdeskTicket(models.Model):
         else:
             action.update(domain=[('id', 'in', self.fsm_task_ids.ids)], name=_('Tasks'))
         return action
+
+    def create_project_task(self):
+        result = super(HelpdeskTicket, self).create_project_task()
+        for ticket in self:
+            task = ticket.task_id
+            if task:
+                task.attachment_ids = [(4, attachment.id) for attachment in ticket.attachment_ids]
+        return result
 
 
 class TimeSlots(models.Model):

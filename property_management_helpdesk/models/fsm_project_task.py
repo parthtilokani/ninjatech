@@ -9,6 +9,10 @@ class ProjectTask(models.Model):
     # category_id = fields.Many2one(related="helpdesk_ticket_id.category_id")
     custom_priority = fields.Selection(related="helpdesk_ticket_id.custom_priority")
     scheduled_slot_ids = fields.One2many(related="helpdesk_ticket_id.scheduled_slot_ids")
+    is_project_manager = fields.Boolean(compute="_compute_user_groups", store=False)
+    is_project_user = fields.Boolean(compute="_compute_user_groups", store=False)
+    is_admin_user = fields.Boolean(compute="_compute_user_groups", store=False)
+    sequence_number = fields.Char(string='Sequence', readonly=True, copy=False)
 
     @api.model
     def _default_category_id(self):
@@ -60,8 +64,6 @@ class ProjectTask(models.Model):
         domain="[('id', 'in', allowed_role_ids)]"
     )
 
-    sequence_number = fields.Char(string='Sequence', readonly=True, copy=False)
-
     @api.model
     def create(self, vals):
         if 'helpdesk_role_id' in vals and vals['helpdesk_role_id']:
@@ -78,3 +80,11 @@ class ProjectTask(models.Model):
                 stage_name = rec.stage_id.name if rec.stage_id else ''
                 rec.display_name = f"{rec.display_name}-{stage_name}"
         return res
+
+    def _compute_user_groups(self):
+        for record in self:
+            user = self.env.user
+            record.is_project_manager = user.has_group('project.group_project_manager')
+            record.is_project_user = user.has_group('project.group_project_user')
+            record.is_admin_user = user.has_group('base.group_system')  # Admin group
+

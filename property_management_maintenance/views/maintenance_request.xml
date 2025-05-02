@@ -7,6 +7,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='email_cc']" position="replace">
             </xpath>
+            <xpath expr="//field[@name='maintenance_team_id']" position="replace">
+            </xpath>
             <xpath expr="//field[@name='priority']" position="replace">
                 <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}"/>
             </xpath>
@@ -15,7 +17,7 @@
                 <field name="unit_id" required="1" domain="[('apartment_config_id', '=', building_id)]"/>
             </xpath>
             <xpath expr="//notebook/page[1]" position="after">
-                <page string="Tools" name="tools">
+                <page string="Tools" name="tools" invisible="1">
                     <field name="tool_ids" >
                         <list editable="bottom" >
                             <field name="equipment_id" domain="[('unit_id', '=', parent.unit_id)]"/>
@@ -25,5 +27,33 @@
             </xpath>
         </field>
     </record>
+
+    <record id="inherit_maintenance_hr_equipment_request_view_kanban" model="ir.ui.view">
+            <field name="name">maintenance.request.kanban.inherit</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban"/>
+            <field name="arch" type="xml">
+                <field name="priority" widget="priority" position="replace">
+<!--                    <field name="custom_priority" widget="selection"/>-->
+                    <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}" />
+                </field>
+            </field>
+        </record>
+
+    <menuitem
+        id="maintenance.menu_equipment_form"
+        name="Equipment"
+        parent="maintenance.menu_maintenance_title"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        active="0"
+        sequence="2"/>
+
+     <menuitem
+        id="maintenance.menu_maintenance_teams"
+        name="Maintenance Teams"
+        parent="maintenance.menu_maintenance_configuration"
+        active="0"
+        groups="maintenance.group_equipment_manager"
+        sequence="1"/>
 
 </odoo>
