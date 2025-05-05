@@ -18,16 +18,18 @@ class MaintenanceRequest(models.Model):
     def default_unit_id(self):
         return [('apartment_config_id', '=', self.building_id.id)]
 
-    building_id = fields.Many2one('apartment.config', string="Building")
-    unit_id = fields.Many2one('apartment.unit', string="Unit")
+    # building_id = fields.Many2one('apartment.config', string="Building")
+    # unit_id = fields.Many2one('apartment.unit', string="Unit")
+    partner_id = fields.Many2one('res.partner',string='Customer')  
+    building_id = fields.Many2one('apartment.config',
+                                  related='partner_id.apartment_unit_id.apartment_config_id',
+                                  string="Building")
+    unit_id = fields.Many2one('apartment.unit',
+                              related='partner_id.apartment_unit_id', string="Unit")
     tool_ids = fields.One2many('maintenance.tool', 'request_id', string="Tools")
     maintenance_type = fields.Selection([('corrective', 'Corrective'), ('preventive', 'Preventive')],
                                         string='Maintenance Type', default="preventive")
-
-    user_id = fields.Many2one(
-        'res.users',
-        domain="[('is_maintenance_staff', '=', True)]")
-
+    user_id = fields.Many2one('res.users',domain="[('is_maintenance_staff', '=', True)]")
     custom_priority = fields.Selection(
         selection=[
             ('low', 'Low'),

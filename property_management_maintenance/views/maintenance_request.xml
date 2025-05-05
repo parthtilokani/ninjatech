@@ -10,9 +10,10 @@
             <xpath expr="//field[@name='maintenance_team_id']" position="replace">
             </xpath>
             <xpath expr="//field[@name='priority']" position="replace">
-                <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}"/>
+                <field name="custom_priority" />
             </xpath>
             <xpath expr="//field[@name='equipment_id']" position="replace">
+                <field name="partner_id" invisible="maintenance_type == 'preventive'"/>
                 <field name="building_id" required="1" />
                 <field name="unit_id" required="1" domain="[('apartment_config_id', '=', building_id)]"/>
             </xpath>

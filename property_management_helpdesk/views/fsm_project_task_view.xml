@@ -9,24 +9,25 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             <field name="partner_id" position="after">
-                <field name="building_id" />
-                <field name="unit_id" />
+                <field name="building_id" readonly="not is_editable_user"/>
+                <field name="unit_id" readonly="not is_editable_user"/>
             </field>
              <field name="user_ids" position="attributes">
                 <attribute name="invisible">1</attribute>
+                <attribute name="readonly">"not is_editable_user"</attribute>
             </field>
             <field name="tag_ids" position="before">
-                <field name="sequence_number" readonly="1"/>
+                <field name="sequence_number" readonly="not is_editable_user"/>
             </field>
             <field name="tag_ids" position="after">
-                <field name="category_id"/>
+                <field name="category_id" readonly="not is_editable_user"/>
                 <field name="allowed_role_ids" widget="many2many_tags" invisible="1"/>
-                <field name="helpdesk_role_id"/>
+                <field name="helpdesk_role_id" readonly="not is_editable_user"/>
                 <field name="allowed_user_ids" widget="many2many_tags" invisible="1"/>
-                <field name="user_ids" widget="many2many_tags" domain="[('id', 'in', allowed_user_ids)]"/>
+                <field name="user_ids" widget="many2many_tags" domain="[('id', 'in', allowed_user_ids)]" readonly="not is_editable_user"/>
             </field>
             <xpath expr="//group/group/div/field[@name='project_id']" position="before">
-                <field name="custom_priority" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}"/>
+                <field name="custom_priority" readonly="not is_editable_user" widget="icon_selection" options="{'icon': 'fa-flag', 'colors': {'urgent': 'text-danger', 'high': 'text-warning', 'normal': 'text-info', 'low': 'text-muted'}}"/>
             </xpath>
             <xpath expr="//field[@name='project_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -78,8 +79,10 @@
         <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='page_timesheets']//field[@name='timesheet_ids']/list/field[@name='employee_id']" position="replace">
-                <field name="employee_id" invisible="not is_admin_user and not is_project_manager" readonly="0"/>                
+                <field name="employee_id" invisible="not is_admin_user and not is_project_manager" readonly="0"/>
+                <field name="employee_id" invisible="not is_project_user or is_admin_user or is_project_manager" readonly="1"/>
             </xpath>
+        </field>
     </record>
 
 

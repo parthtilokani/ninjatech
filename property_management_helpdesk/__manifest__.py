@@ -17,7 +17,7 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'helpdesk', 'website_helpdesk', 'web', 'bus', 'mail', 'helpdesk_fsm','industry_fsm_sale','project_enterprise'],
+    'depends': ['base', 'helpdesk', 'website_helpdesk', 'web', 'bus', 'mail', 'helpdesk_fsm','industry_fsm_sale','project_enterprise', 'hr_timesheet'],
 
     'assets': {
         'web.assets_frontend': [

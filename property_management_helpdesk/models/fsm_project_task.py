@@ -9,10 +9,20 @@ class ProjectTask(models.Model):
     # category_id = fields.Many2one(related="helpdesk_ticket_id.category_id")
     custom_priority = fields.Selection(related="helpdesk_ticket_id.custom_priority")
     scheduled_slot_ids = fields.One2many(related="helpdesk_ticket_id.scheduled_slot_ids")
-    is_project_manager = fields.Boolean(compute="_compute_user_groups", store=False)
-    is_project_user = fields.Boolean(compute="_compute_user_groups", store=False)
-    is_admin_user = fields.Boolean(compute="_compute_user_groups", store=False)
     sequence_number = fields.Char(string='Sequence', readonly=True, copy=False)
+    is_editable_user = fields.Boolean(
+        string="Is Editable User",
+        compute='_compute_is_editable_user',
+        store=False  # This should remain False as it's a transient property.
+    )
+
+    def _compute_is_editable_user(self):
+        group = self.env.ref('industry_fsm.group_fsm_user')
+        is_in_group = self.env.user in group.users
+        print('is_in_group',is_in_group)
+        for task in self:
+            task.is_editable_user = is_in_group
+            print('task.is_editable_user',task.is_editable_user)
 
     @api.model
     def _default_category_id(self):
@@ -81,10 +91,38 @@ class ProjectTask(models.Model):
                 rec.display_name = f"{rec.display_name}-{stage_name}"
         return res
 
+
+class AccountAnalyticLine(models.Model):
+    _inherit = 'account.analytic.line'
+
+    is_project_manager = fields.Boolean(compute="_compute_user_groups", store=False, groups="base.group_user")
+    is_project_user = fields.Boolean(compute="_compute_user_groups", store=False, groups="base.group_user")
+    is_admin_user = fields.Boolean(compute="_compute_user_groups", store=False, groups="base.group_user")
+
+    @api.model
+    def _get_employee_domain(self):
+        # Get the current user and their employee
+        current_employee = self.env['hr.employee'].search([('user_id', '=', self.env.user.id)], limit=1)
+
+        # Get the task assigned user and their employee
+        assigned_employee = self.env['hr.employee']
+        if self.task_id and self.task_id.user_id:
+            assigned_employee = self.env['hr.employee'].search([('user_id', '=', self.task_id.user_id.id)], limit=1)
+
+        # Combine the employee IDs
+        employee_ids = (current_employee | assigned_employee).ids
+        return [('id', 'in', employee_ids)]
+
+    employee_id = fields.Many2one(
+        'hr.employee',
+        string="Employee",
+        domain=_get_employee_domain
+    )
+
+    @api.depends('user_id')
     def _compute_user_groups(self):
         for record in self:
             user = self.env.user
             record.is_project_manager = user.has_group('project.group_project_manager')
             record.is_project_user = user.has_group('project.group_project_user')
             record.is_admin_user = user.has_group('base.group_system')  # Admin group
-

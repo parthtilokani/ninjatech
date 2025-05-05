@@ -18,7 +18,7 @@ class HelpdeskTicket(models.Model):
     category_id = fields.Many2one('helpdesk.category')
     is_reviewed = fields.Boolean('Reviewed?')
     custom_priority = fields.Selection([('urgent', 'Urgent'), ('high', 'High'),
-                                        ('normal', 'Normal'), ('low', 'Low')], "Priority", default='low', required=True)
+                                        ('normal', 'Normal'), ('low', 'Low')], "Priority", default='low')
     is_helpdesk_manager = fields.Boolean(compute="_compute_user_groups", store=False)
     is_helpdesk_user = fields.Boolean(compute="_compute_user_groups", store=False)
     is_admin_user = fields.Boolean(compute="_compute_user_groups", store=False)
@@ -147,15 +147,15 @@ class TimeSlots(models.Model):
             else:
                 record.to_formatted_time = ""
 
-    class HelpdeskSLA(models.Model):
-        _inherit = 'helpdesk.sla'
+class HelpdeskSLA(models.Model):
+    _inherit = 'helpdesk.sla'
 
-        custom_priority = fields.Selection(
-            selection=[
-                ('low', 'Low'),
-                ('medium', 'Medium'),
-                ('high', 'High'),
-                ('urgent', 'Urgent'),
-            ],
-            string="Custom Priority",
-        )
+    custom_priority = fields.Selection(
+        selection=[
+            ('low', 'Low'),
+            ('medium', 'Medium'),
+            ('high', 'High'),
+            ('urgent', 'Urgent'),
+        ],
+        string="Custom Priority",
+    )
