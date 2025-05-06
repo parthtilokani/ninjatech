@@ -9,3 +9,4 @@ from . import helpdesk_category
 from . import helpdesk_team
 from . import fsm_project_task
 from . import helpdesk_create_fsm_task
+from . import ir_actions
