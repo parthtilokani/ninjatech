@@ -90,22 +90,17 @@
     <menuitem id="industry_fsm.fsm_tasks_menu"
         name="My Tasks"
         sequence="10"
-        parent="fsm_menu_root"
-        groups="industry_fsm.group_fsm_user,property_mangement_helpdesk.group_fsm_technician"/>
+        parent="industry_fsm.fsm_menu_root"
+        groups="industry_fsm.group_fsm_user,property_management_helpdesk.group_fsm_technician"/>
 
         <menuitem id="industry_fsm.fsm_menu_tasks_kanban"
             name="Tasks"
-            action="project_task_fsm_server_action"
+            action="industry_fsm.project_task_fsm_server_action"
             sequence="10"
-            parent="fsm_tasks_menu"
-            groups="industry_fsm.group_fsm_user,property_mangement_helpdesk.group_fsm_technician"/>
+            parent="industry_fsm.fsm_tasks_menu"
+            groups="industry_fsm.group_fsm_user,property_management_helpdesk.group_fsm_technician"/>
 
-        <menuitem id="fsm_menu_tasks_map"
-            name="Map"
-            action="project_task_fsm_map_server_action"
-            sequence="20"
-            parent="fsm_tasks_menu"
-            groups="industry_fsm.group_fsm_user"/>
+
 
 
 
