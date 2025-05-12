@@ -208,5 +208,11 @@
                 sequence="20" />
 
 
+    <menuitem id="industry_fsm.fsm_menu_root"
+        name="Field Service"
+        sequence="80"
+        web_icon="industry_fsm,static/description/icon.png"
+        groups="property_management_helpdesk.group_fsm_technician"/>
+
 
 </odoo>

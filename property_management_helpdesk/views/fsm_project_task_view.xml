@@ -35,6 +35,9 @@
             <page name="extra_info" position="attributes">
                 <attribute name="invisible">1</attribute>
             </page>
+            <page name="sub_tasks_page" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </page>
         </field>
     </record>
 
@@ -79,12 +82,64 @@
         <field name="inherit_id" ref="hr_timesheet.view_task_form2_inherited"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='page_timesheets']//field[@name='timesheet_ids']/list/field[@name='employee_id']" position="replace">
-                <field name="employee_id" invisible="not is_admin_user and not is_project_manager" readonly="0"/>
-                <field name="employee_id" invisible="not is_project_user or is_admin_user or is_project_manager" readonly="1"/>
+                <field name="employee_id" readonly="not (is_admin_user or is_project_manager)"/>
             </xpath>
         </field>
     </record>
 
+    <record id="sale_timesheet_inherit_list" model="ir.ui.view">
+        <field name="name">sale.timesheet.list.inherit.timesheet</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="sale_timesheet.project_task_view_form_inherit_sale_timesheet"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='timesheet_ids']/list/field[@name='so_line']" position="attributes">
+                <attribute name="column_invisible">true</attribute>
+            </xpath>
+            <xpath expr="//field[@name='timesheet_ids']/list/field[@name='so_line'][2]" position="attributes">
+                <attribute name="column_invisible">true</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+
+    <record id="view_timesheet_form_view" model="ir.ui.view">
+        <field name="name">timesheet.form.view</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_form" />
+        <field name="arch" type="xml">
+            <field name="account_id" position="attributes">
+                <attribute name="invisible">true</attribute>
+            </field>
+            <field name="amount" position="attributes">
+                <attribute name="invisible">true</attribute>
+            </field>
+            <field name="ref" position="attributes">
+                <attribute name="invisible">true</attribute>
+            </field>
+            <field name="partner_id" position="attributes">
+                <attribute name="invisible">true</attribute>
+            </field>
+            <field name="unit_amount" position="attributes">
+                <attribute name="invisible">true</attribute>
+            </field>
+            <field name="product_id" position="attributes">
+                <attribute name="invisible">true</attribute>
+            </field>
+            <field name="product_uom_id" position="attributes">
+                <attribute name="invisible">true</attribute>
+            </field>
+            <group name="amount" position="attributes">
+                <attribute name="invisible">true</attribute>
+            </group>
+            <group name="accounting" position="attributes">
+                <attribute name="groups">project.group_project_manager</attribute>
+            </group>
+            <field name="date" position="attributes">
+                <attribute name="readonly">not (is_admin_user or is_project_manager)</attribute>
+            </field>
+        </field>
+    </record>
 
 
     <menuitem id="industry_fsm.fsm_tasks_menu"
